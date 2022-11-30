@@ -3,6 +3,7 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { StyledRegister } from "./style";
+import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,12 +38,15 @@ export const RegisterPage = () => {
       ? setButtonColor("primary")
       : setButtonColor("primaryDisabled");
   }, [watch()]);
+  console.log(errors);
 
   return (
     <StyledRegister>
       <header>
         <h1>Kenzie Hub</h1>
-        <button>Voltar</button>
+        <Link to={"/"}>
+          <button>Voltar</button>
+        </Link>
       </header>
       <form onSubmit={handleSubmit(onSubmitFunction)} noValidate>
         <h2>Crie sua conta</h2>

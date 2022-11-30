@@ -2,28 +2,60 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { StyledLogin } from "./sytyle";
 
-const Login = () => {
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "./formSchema";
+import { Link } from "react-router-dom";
+
+export const LoginPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(registerSchema),
+  });
+
+  const postLogin = (data) => {
+    console.log(data);
+  };
   return (
     <>
       <h1>Kenzie Hub</h1>
-      <StyledLogin>
+      <StyledLogin onSubmit={handleSubmit(postLogin)} noValidate>
         <h2>Login</h2>
         <Input
-          type="text"
+          name={"email"}
+          type="email"
           label="Email"
-          placeholder="Digite aqui seu email"
-        ></Input>
+          placeholder={"Digite aqui seu email"}
+          register={register}
+          required
+        />
+        {errors.email?.message && (
+          <p className="formError">{errors.email.message}</p>
+        )}
+
         <Input
+          name={"password"}
           type="password"
-          label="Password"
-          placeholder="Digite aqui sua senha"
-        ></Input>
-        <Button text="Entrar" color="primary" />
+          label="Senha"
+          placeholder={"Digite aqui sua senha"}
+          register={register}
+          required
+        />
+        {errors.password?.message && (
+          <p className="formError">{errors.password.message}</p>
+        )}
+        <Button text="Entrar" color="primary" link="/" />
         <p>Ainda não possui uma conta?</p>
-        <Button text="Cadastre-se" color="grey" />
+        <Button
+          type="button"
+          text="Cadastre-se"
+          color="grey"
+          link="/register"
+        />
       </StyledLogin>
     </>
   );
 };
-
-export default Login;

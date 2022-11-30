@@ -1,27 +1,29 @@
+import { Link } from "react-router-dom";
 import {
   StyledButtonDisabled,
   StyledButtonGrey,
   StyledButtonPrimary,
 } from "./style";
 
-export const Button = ({ text, color, type = "submit" }) => {
+export const Button = ({ text, color, type = "submit", link = "" }) => {
   return (
     <>
       {color === "primary" && (
-        <StyledButtonPrimary type={type}>{text}</StyledButtonPrimary>
+        <Link to={link}>
+          <StyledButtonPrimary type={type}>{text}</StyledButtonPrimary>
+        </Link>
       )}
       {color === "primaryDisabled" && (
-        <StyledButtonDisabled type={type}>{text}</StyledButtonDisabled>
+        <Link to={link}>
+          <StyledButtonDisabled type={type}>{text}</StyledButtonDisabled>
+        </Link>
       )}
       {color === "grey" && (
-        <StyledButtonGrey type={type}>{text}</StyledButtonGrey>
+        <Link to={link}>
+          {" "}
+          <StyledButtonGrey type={type}>{text}</StyledButtonGrey>
+        </Link>
       )}
     </>
   );
 };
-
-// color === "primary" ? (
-//   <StyledButtonPrimary>{text}</StyledButtonPrimary>
-// ) : (
-//   <StyledButtonGrey>{text}</StyledButtonGrey>
-// );
