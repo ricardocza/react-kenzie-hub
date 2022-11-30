@@ -58,6 +58,11 @@ const GlobalStyle = createGlobalStyle`
         color: var(--color-grey0);
         cursor: pointer;
     }
+    a {
+        color: unset;
+    width: 100%;
+    text-decoration: none;
+    }
     label {
     font-size: 12px;
   }
