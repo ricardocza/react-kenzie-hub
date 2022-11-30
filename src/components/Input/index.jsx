@@ -1,7 +1,14 @@
 import passIcon from "../../images/passIcon.png";
 import { StyledDiv, StyledInput } from "./style";
 
-export const Input = ({ type, label, placeholder }) => {
+export const Input = ({
+  name,
+  type,
+  label,
+  placeholder,
+  register,
+  required,
+}) => {
   const showPassword = (event) => {
     event.target.previousSibling.type = "text";
   };
@@ -14,7 +21,11 @@ export const Input = ({ type, label, placeholder }) => {
       <label htmlFor="">{label}</label>
 
       <StyledInput>
-        <input type={type} placeholder={placeholder} />
+        <input
+          type={type}
+          placeholder={placeholder}
+          {...register(name, { required })}
+        />
         {type === "password" ? (
           <span onMouseDown={showPassword} onMouseUp={hidePassword}>
             <img src={passIcon} alt="" />
