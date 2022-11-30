@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./formSchema";
+import { Header } from "../../components/Header";
 
 export const RegisterPage = () => {
   const quarters = [
@@ -42,12 +43,7 @@ export const RegisterPage = () => {
 
   return (
     <StyledRegister>
-      <header>
-        <h1>Kenzie Hub</h1>
-        <Link to={"/"}>
-          <button>Voltar</button>
-        </Link>
-      </header>
+      <Header />
       <form onSubmit={handleSubmit(onSubmitFunction)} noValidate>
         <h2>Crie sua conta</h2>
         <p>Rápido e grátis, vamos nessa!</p>
