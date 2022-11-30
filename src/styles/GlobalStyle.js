@@ -45,18 +45,22 @@ const GlobalStyle = createGlobalStyle`
     }
 
     p {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         font-weight: 500;
     }
 
-    button {
-        width: 100%;
+    button, select {
+        width: 100%;        
         height: 38.5px;
+        font-size: 1rem;
         border: 1px solid var(--color-primary);
         border-radius: 4px;
         color: var(--color-grey0);
         cursor: pointer;
     }
+    label {
+    font-size: 12px;
+  }
 
     
 `;
