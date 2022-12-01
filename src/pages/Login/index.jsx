@@ -5,8 +5,6 @@ import { StyledLogin } from "./sytyle";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./formSchema";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import { FormError } from "../../components/FormError";
 
 export const LoginPage = () => {
