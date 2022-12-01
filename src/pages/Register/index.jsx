@@ -4,10 +4,12 @@ import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { StyledRegister } from "./style";
 import { Link } from "react-router-dom";
+import { Header } from "../../components/Header";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./formSchema";
+import { FormError } from "../../components/FormError";
 
 export const RegisterPage = () => {
   const quarters = [
@@ -38,16 +40,10 @@ export const RegisterPage = () => {
       ? setButtonColor("primary")
       : setButtonColor("primaryDisabled");
   }, [watch()]);
-  console.log(errors);
 
   return (
     <StyledRegister>
-      <header>
-        <h1>Kenzie Hub</h1>
-        <Link to={"/"}>
-          <button>Voltar</button>
-        </Link>
-      </header>
+      <Header />
       <form onSubmit={handleSubmit(onSubmitFunction)} noValidate>
         <h2>Crie sua conta</h2>
         <p>Rápido e grátis, vamos nessa!</p>
@@ -59,9 +55,7 @@ export const RegisterPage = () => {
           register={register}
           required
         />
-        {errors.name?.message && (
-          <p className="formError">{errors.name.message}</p>
-        )}
+        {errors.name?.message && <FormError text={errors.name.message} />}
 
         <Input
           name={"email"}
@@ -71,9 +65,7 @@ export const RegisterPage = () => {
           register={register}
           required
         />
-        {errors.email?.message && (
-          <p className="formError">{errors.email.message}</p>
-        )}
+        {errors.email?.message && <FormError text={errors.email.message} />}
 
         <Input
           name={"password"}
@@ -84,7 +76,7 @@ export const RegisterPage = () => {
           required
         />
         {errors.password?.message && (
-          <p className="formError">{errors.password.message}</p>
+          <FormError text={errors.password.message} />
         )}
 
         <Input
@@ -96,7 +88,7 @@ export const RegisterPage = () => {
           required
         />
         {errors.confirmPassword?.message && (
-          <p className="formError">{errors.confirmPassword.message}</p>
+          <FormError text={errors.confirmPassword.message} />
         )}
 
         <Input
@@ -107,9 +99,7 @@ export const RegisterPage = () => {
           register={register}
           required
         />
-        {errors.bio?.message && (
-          <p className="formError">{errors.bio.message}</p>
-        )}
+        {errors.bio?.message && <FormError text={errors.bio.message} />}
 
         <Input
           name={"phoneNumber"}
@@ -120,7 +110,7 @@ export const RegisterPage = () => {
           required
         />
         {errors.phoneNumber?.message && (
-          <p className="formError">{errors.phoneNumber.message}</p>
+          <FormError text={errors.phoneNumber.message} />
         )}
 
         <Select
@@ -129,9 +119,7 @@ export const RegisterPage = () => {
           register={register}
           required
         />
-        {errors.quarter?.message && (
-          <p className="formError">{errors.quarter.message}</p>
-        )}
+        {errors.quarter?.message && <FormError text={errors.quarter.message} />}
 
         <Button text="Cadastrar" color={buttonColor} />
       </form>

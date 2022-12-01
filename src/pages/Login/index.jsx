@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./formSchema";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { FormError } from "../../components/FormError";
 
 export const LoginPage = () => {
   const {
@@ -32,9 +34,7 @@ export const LoginPage = () => {
           register={register}
           required
         />
-        {errors.email?.message && (
-          <p className="formError">{errors.email.message}</p>
-        )}
+        {errors.email?.message && <FormError text={errors.email.message} />}
 
         <Input
           name={"password"}
@@ -45,7 +45,7 @@ export const LoginPage = () => {
           required
         />
         {errors.password?.message && (
-          <p className="formError">{errors.password.message}</p>
+          <FormError text={errors.password.message} />
         )}
         <Button text="Entrar" color="primary" link="/" />
         <p>Ainda não possui uma conta?</p>
