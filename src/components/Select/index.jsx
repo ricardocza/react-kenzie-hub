@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Button } from "../Button";
 import { StyledDiv, StyledSelect } from "./style";
 
-export const Select = ({ options, textLabel, register, required }) => {
+export const Select = ({ name, options, textLabel, register, required }) => {
   return (
     <StyledDiv>
       <label htmlFor="">{textLabel}</label>
-      <StyledSelect {...register("quarter", { required })}>
+      <StyledSelect {...register(name, { required })}>
         <option key={"emptyOption"} value={""}>
           Selecione um período
         </option>

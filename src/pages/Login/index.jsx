@@ -4,21 +4,35 @@ import { StyledLogin } from "./sytyle";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "./formSchema";
+import { loginSchema } from "./loginSchema";
 import { FormError } from "../../components/FormError";
-
+import { api } from "../../services/api";
+import { useEffect } from "react";
 export const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(registerSchema),
+    mode: "onBlur",
+    resolver: yupResolver(loginSchema),
   });
 
-  const postLogin = (data) => {
-    console.log(data);
+  const requestLogin = async (data) => {
+    try {
+      const response = await api.post("sessions", data);
+
+      console.log(api);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const postLogin = (data) => {
+    requestLogin(data);
+  };
+
   return (
     <>
       <h1>Kenzie Hub</h1>

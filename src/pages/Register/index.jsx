@@ -7,8 +7,9 @@ import { Header } from "../../components/Header";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "./formSchema";
+import { registerSchema } from "./registerSchema";
 import { FormError } from "../../components/FormError";
+import { api } from "../../services/api";
 
 export const RegisterPage = () => {
   const quarters = [
@@ -27,10 +28,29 @@ export const RegisterPage = () => {
     watch,
     formState: { errors },
   } = useForm({
+    mode: "onBlur",
     resolver: yupResolver(registerSchema),
   });
+
+  const requestRegistrer = async (objectData) => {
+    try {
+      const request = await api.post("users", objectData);
+      console.log(request);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onSubmitFunction = (data) => {
-    console.log(data);
+    const objRequest = {
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      bio: data.bio,
+      contact: data.contact,
+      course_module: data.course_module,
+    };
+    requestRegistrer(objRequest);
   };
 
   useEffect(() => {
@@ -101,24 +121,25 @@ export const RegisterPage = () => {
         {errors.bio?.message && <FormError text={errors.bio.message} />}
 
         <Input
-          name={"phoneNumber"}
+          name={"contact"}
           type="text"
           label="Contato"
           placeholder={"Opção de contato"}
           register={register}
           required
         />
-        {errors.phoneNumber?.message && (
-          <FormError text={errors.phoneNumber.message} />
-        )}
+        {errors.contact?.message && <FormError text={errors.contact.message} />}
 
         <Select
+          name={"course_module"}
           options={quarters}
           textLabel="Selecionar módulo"
           register={register}
           required
         />
-        {errors.quarter?.message && <FormError text={errors.quarter.message} />}
+        {errors.course_module?.message && (
+          <FormError text={errors.course_module.message} />
+        )}
 
         <Button text="Cadastrar" color={buttonColor} />
       </form>

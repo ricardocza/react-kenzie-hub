@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
-export const StyledDiv = styled.div`
+export const StyledFieldset = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
   position: relative;
+  border: none;
 `;
 
-export const StyledInput = styled.div`
+export const StyledDiv = styled.div`
   position: relative;
   width: 100%;
 
