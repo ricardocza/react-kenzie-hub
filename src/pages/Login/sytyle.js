@@ -6,6 +6,7 @@ export const StyledLogin = styled.form`
   align-items: center;
   gap: 1.125rem;
   background-color: var(--color-grey3);
+  border-radius: 4px;
   width: 90%;
   max-width: 300px;
   margin: 0 auto;

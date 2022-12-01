@@ -8,6 +8,7 @@ export const StyledRegister = styled.section`
   gap: 2rem;
 
   form {
+    border-radius: 4px;
     width: 90%;
     max-width: 300px;
     display: flex;
@@ -17,6 +18,13 @@ export const StyledRegister = styled.section`
     background-color: var(--color-grey3);
     margin: 0 auto;
     padding: 34px 16px;
+
+    & div + p {
+      display: flex;
+      width: 100%;
+      margin-top: -17px;
+      color: var(--color-primary);
+    }
   }
   h2 + p {
     color: var(--color-grey1);

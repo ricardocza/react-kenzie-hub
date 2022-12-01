@@ -4,11 +4,11 @@ import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { StyledRegister } from "./style";
 import { Link } from "react-router-dom";
+import { Header } from "../../components/Header";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./formSchema";
-import { Header } from "../../components/Header";
 
 export const RegisterPage = () => {
   const quarters = [
