@@ -9,7 +9,21 @@ export const StyledDiv = styled.div`
 
 export const StyledSelect = styled.select`
   width: 100%;
+  height: 38.5px;
+  padding-left: 12px;
   background-color: var(--color-grey2);
   border: 1px solid var(--color-grey2);
-  padding-left: 16px;
+  border-radius: 4px;
+  color: var(--color-grey0);
+  font-size: 1rem;
 `;
+
+/* button, select {
+        width: 100%;        
+        height: 38.5px;
+        font-size: 1rem;
+        border: 1px solid var(--color-primary);
+        border-radius: 4px;
+        color: var(--color-grey0);
+        cursor: pointer;
+    } */

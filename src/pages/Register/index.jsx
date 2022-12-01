@@ -10,7 +10,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./registerSchema";
 import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
-
+import { toast } from "react-toastify";
+import { toastConfig } from "../../components/ToastConfig";
 export const RegisterPage = () => {
   const quarters = [
     "Primeiro Módulo",
@@ -21,36 +22,57 @@ export const RegisterPage = () => {
     "Sexto Módulo",
   ];
   const [buttonColor, setButtonColor] = useState("primaryDisabled");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(true);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(registerSchema),
   });
 
   const requestRegistrer = async (objectData) => {
     try {
-      const request = await api.post("users", objectData);
-      console.log(request);
+      const request = await toast.promise(
+        api.post("users", objectData),
+        {
+          pending: "Verificando dados...",
+          success: "Email cadastrado com sucesso!",
+          error: "Email já cadastrado",
+        },
+        toastConfig
+      );
+      return request;
     } catch (error) {
-      console.log(error);
+      setIsError(true);
+
+      return error;
+    } finally {
+      setIsLoading(false);
+      if (!isError) {
+        setIsError(true);
+      }
     }
   };
 
-  const onSubmitFunction = (data) => {
-    const objRequest = {
-      email: data.email,
-      password: data.password,
-      name: data.name,
-      bio: data.bio,
-      contact: data.contact,
-      course_module: data.course_module,
-    };
-    requestRegistrer(objRequest);
+  const onSubmitFunction = async (data) => {
+    if (!isLoading) {
+      const objRequest = {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        bio: data.bio,
+        contact: data.contact,
+        course_module: data.course_module,
+      };
+      setIsLoading(true);
+      const promiseResponse = await requestRegistrer(objRequest);
+      promiseResponse.status === 201 && reset();
+    }
   };
 
   useEffect(() => {

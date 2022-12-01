@@ -48,16 +48,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 0.75rem;
         font-weight: 500;
     }
-
-    button, select {
-        width: 100%;        
-        height: 38.5px;
-        font-size: 1rem;
-        border: 1px solid var(--color-primary);
-        border-radius: 4px;
-        color: var(--color-grey0);
-        cursor: pointer;
-    }
+   
     a {
         color: unset;
     width: 100%;

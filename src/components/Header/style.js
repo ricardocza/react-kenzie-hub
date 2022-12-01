@@ -13,9 +13,12 @@ export const StyledHeader = styled.header`
   }
 
   button {
-    max-width: 100px;
+    width: 100%;
+    height: 38.5px;
     background-color: var(--color-grey3);
     border: 1px solid var(--color-grey3);
+    border-radius: 4px;
+    color: var(--color-grey0);
   }
 
   a {
