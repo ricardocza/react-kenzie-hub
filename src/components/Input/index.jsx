@@ -6,8 +6,10 @@ export const Input = ({
   type,
   label,
   placeholder,
-  register = "",
-  required = "",
+  register,
+  required,
+  disabled = false,
+  value,
 }) => {
   const showPassword = (event) => {
     event.target.previousSibling.type = "text";

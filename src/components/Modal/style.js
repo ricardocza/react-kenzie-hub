@@ -42,14 +42,24 @@ export const StyledModal = styled.div`
       gap: 16px;
       margin: 16px 0;
       padding: 0 16px;
-    }
-    & > form > :nth-child(3) {
-      display: flex;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      gap: 10px;
+
+      & > div {
+        display: flex;
+        gap: 16px;
+
+        & > button {
+          font-size: 0.75rem;
+        }
+      }
+
+      & button {
+        display: flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        gap: 10px;
+      }
     }
   }
 `;
