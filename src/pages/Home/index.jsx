@@ -14,16 +14,19 @@ export const HomePage = ({
   isLoading,
   setIsLoading,
 }) => {
+  const [techSelected, setTechSelected] = useState("");
   const [newTechModal, setNewTechModal] = useState(false);
   const [modifyTechModal, setModifyTechModal] = useState(false);
 
   const navigate = useNavigate();
 
   const openModal = (event) => {
-    console.log(event.target.className);
-    event.target.className === "newTech"
-      ? setNewTechModal(!newTechModal)
-      : setModifyTechModal(!modifyTechModal);
+    if (event.target.className === "newTech") {
+      setNewTechModal(!newTechModal);
+    } else {
+      setModifyTechModal(!modifyTechModal);
+      setTechSelected(event.target.children[0].innerText);
+    }
   };
 
   return (
@@ -47,6 +50,7 @@ export const HomePage = ({
             techs?.map((element) => (
               <Card
                 key={element.id}
+                id={element.id}
                 type={"modifyTech"}
                 techName={element.title}
                 level={element.status}
@@ -79,6 +83,7 @@ export const HomePage = ({
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           setTechs={setTechs}
+          techSelected={techSelected}
         />
       )} */}
     </StyledHome>

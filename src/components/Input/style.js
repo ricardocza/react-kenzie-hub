@@ -20,7 +20,7 @@ export const StyledDiv = styled.div`
     color: var(--color-grey1);
     border-radius: 4px;
     border: 1px solid var(--color-grey2);
-    font-size: 1rem;
+    font-size: 0.875rem;
     padding-left: 1rem;
   }
   input:focus {

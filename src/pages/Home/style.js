@@ -24,17 +24,17 @@ export const StyledHome = styled.div`
     color: var(--color-grey2);
   }
 
-  & > :nth-child(3) {
+  & > :nth-child(3):is(section) {
     display: flex;
     flex-direction: column;
     gap: 21px;
   }
-  & > :nth-child(3) div {
+  & > :nth-child(3) > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  & > :nth-child(3) div button {
+  & > :nth-child(3) > div > button {
     width: 32px;
     height: 32px;
     background-color: var(--color-grey3);

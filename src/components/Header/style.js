@@ -22,6 +22,11 @@ export const StyledHeader = styled.header`
     color: var(--color-grey0);
     cursor: pointer;
   }
+  button:hover {
+    background-color: var(--color-grey2);
+    border: 1px solid var(--color-grey2);
+    transition: 0.3s;
+  }
 
   a {
     max-width: 100px;
