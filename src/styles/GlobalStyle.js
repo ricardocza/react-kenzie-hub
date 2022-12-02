@@ -65,6 +65,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 12px;
   }
 
+  .Toastify__toast-body > :last-child {
+    min-width: 235px;    
+  }
+
     
 `;
 
