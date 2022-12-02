@@ -1,5 +1,5 @@
 import passIcon from "../../images/passIcon.png";
-import { StyledDiv, StyledInput } from "./style";
+import { StyledDiv, StyledFieldset } from "./style";
 
 export const Input = ({
   name,
@@ -17,10 +17,10 @@ export const Input = ({
     event.target.previousSibling.type = "password";
   };
   return (
-    <StyledDiv>
+    <StyledFieldset>
       <label htmlFor="">{label}</label>
 
-      <StyledInput>
+      <StyledDiv>
         <input
           type={type}
           placeholder={placeholder}
@@ -31,7 +31,7 @@ export const Input = ({
             <img src={passIcon} alt="" />
           </span>
         ) : null}
-      </StyledInput>
-    </StyledDiv>
+      </StyledDiv>
+    </StyledFieldset>
   );
 };

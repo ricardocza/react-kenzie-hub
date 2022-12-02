@@ -1,6 +1,7 @@
 import styled from "styled-components";
 export const StyledButtonPrimary = styled.button`
   background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
   animation-name: transitionButton;
   animation-duration: 1000ms;
   &:hover {

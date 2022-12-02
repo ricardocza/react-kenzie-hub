@@ -19,6 +19,6 @@ export const registerSchema = yup.object().shape({
     .required("Campo obrigatório")
     .oneOf([yup.ref("password")], "As senhas não coincidem"),
   bio: yup.string().required("Campo obrigatório"),
-  phoneNumber: yup.string().required("Campo obrigatório"),
-  quarter: yup.string().required("Campo obrigatório"),
+  contact: yup.string().required("Campo obrigatório"),
+  course_module: yup.string().required("Campo obrigatório"),
 });
