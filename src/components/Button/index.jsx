@@ -5,24 +5,35 @@ import {
   StyledButtonPrimary,
 } from "./style";
 
-export const Button = ({ text, color, type = "submit", link = "" }) => {
+export const Button = ({
+  text,
+  color,
+  type = "submit",
+  setCurrentRoute,
+  newRoute,
+}) => {
   return (
     <>
       {color === "primary" && (
-        // <Link to={link}>
-        <StyledButtonPrimary type={type}>{text}</StyledButtonPrimary>
-        // </Link>
+        <StyledButtonPrimary
+          onClick={() => setCurrentRoute(newRoute)}
+          type={type}
+        >
+          {text}
+        </StyledButtonPrimary>
       )}
       {color === "primaryDisabled" && (
-        // <Link to={link}>
-        <StyledButtonDisabled type={type}>{text}</StyledButtonDisabled>
-        // </Link>
+        <StyledButtonDisabled
+          onClick={() => setCurrentRoute(newRoute)}
+          type={type}
+        >
+          {text}
+        </StyledButtonDisabled>
       )}
       {color === "grey" && (
-        // <Link to={link}>
-
-        <StyledButtonGrey type={type}>{text}</StyledButtonGrey>
-        // </Link>
+        <StyledButtonGrey onClick={() => setCurrentRoute(newRoute)} type={type}>
+          {text}
+        </StyledButtonGrey>
       )}
     </>
   );

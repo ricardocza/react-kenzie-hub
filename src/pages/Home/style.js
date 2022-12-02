@@ -1,12 +1,16 @@
 import styled from "styled-components";
 
 export const StyledHome = styled.div`
-  max-width: 300px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 34px 16px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  header {
+    max-width: 780px;
+  }
 
   header + section {
     border-top: 2px solid var(--color-grey3);

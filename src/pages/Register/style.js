@@ -10,7 +10,7 @@ export const StyledRegister = styled.section`
   form {
     border-radius: 4px;
     width: 90%;
-    max-width: 300px;
+    max-width: 370px;
     display: flex;
     flex-direction: column;
     align-items: center;

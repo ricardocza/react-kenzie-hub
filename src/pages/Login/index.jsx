@@ -15,18 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 
-export const LoginPage = () => {
+export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [userData, setUserData] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const isLoggedIn = () => {
-      const currentStorage = JSON.parse(localStorage.getItem("userData"));
-      currentStorage?.token ? navigate("/home") : navigate("/");
-    };
-    isLoggedIn();
-  }, [userData]);
 
   const {
     register,
@@ -53,18 +44,18 @@ export const LoginPage = () => {
       console.log(error);
       return error;
     } finally {
-      console.log("finalmently");
+      console.log(setIsLoading(false));
     }
   };
 
   const postLogin = async (data) => {
     const loginResponse = await requestLogin(data);
     if (loginResponse.status === 200) {
-      setUserData(loginResponse.data);
       localStorage.setItem("userData", JSON.stringify(loginResponse.data));
+      setUserData(loginResponse.data);
+      setTechs(loginResponse.data.user.techs);
+      setCurrentRoute("/home");
     }
-
-    console.log(loginResponse);
   };
 
   return (
@@ -93,11 +84,19 @@ export const LoginPage = () => {
         {errors.password?.message && (
           <FormError text={errors.password.message} />
         )}
-        <Button text="Entrar" color="primary" link="/" />
+        <Button
+          text="Entrar"
+          color="primary"
+          setCurrentRoute={setCurrentRoute}
+        />
         <p>Ainda não possui uma conta?</p>
-        <Link to={"register"}>
-          <Button type="button" text="Cadastre-se" color="grey" />
-        </Link>
+        <Button
+          type="button"
+          text="Cadastre-se"
+          color="grey"
+          newRoute="/register"
+          setCurrentRoute={setCurrentRoute}
+        />
       </StyledLogin>
     </>
   );

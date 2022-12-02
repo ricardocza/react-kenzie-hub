@@ -8,7 +8,7 @@ export const StyledLogin = styled.form`
   background-color: var(--color-grey3);
   border-radius: 4px;
   width: 90%;
-  max-width: 300px;
+  max-width: 370px;
   margin: 0 auto;
   padding: 34px 16px;
 

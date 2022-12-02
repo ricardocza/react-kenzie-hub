@@ -45,10 +45,11 @@ export const StyledModal = styled.div`
     }
     & > form > :nth-child(3) {
       display: flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
       gap: 10px;
-      & button {
-        font-size: 0.75rem;
-      }
     }
   }
 `;

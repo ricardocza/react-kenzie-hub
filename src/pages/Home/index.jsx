@@ -5,21 +5,22 @@ import { StyledHome, StyledUl } from "./style";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../../components/Card";
 
-export const HomePage = () => {
+export const HomePage = ({
+  userData,
+  setUserData,
+  techs,
+  setTechs,
+  setCurrentRoute,
+  isLoading,
+  setIsLoading,
+}) => {
   const [newTechModal, setNewTechModal] = useState(false);
   const [modifyTechModal, setModifyTechModal] = useState(false);
-  const [techs, setTechs] = useState();
-  const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("userData"))
-  );
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTechs(userData.user.techs);
-    console.log(techs);
-  }, []);
-
   const openModal = (event) => {
+    console.log(event.target.className);
     event.target.className === "newTech"
       ? setNewTechModal(!newTechModal)
       : setModifyTechModal(!modifyTechModal);
@@ -27,10 +28,10 @@ export const HomePage = () => {
 
   return (
     <StyledHome>
-      <Header setUserData={setUserData} />
+      <Header setCurrentRoute={setCurrentRoute} setUserData={setUserData} />
       <section>
-        <h2>Olá, {userData.user.name}</h2>
-        <p>{userData.user.course_module}</p>
+        <h2>Olá, {userData?.user.name}</h2>
+        <p>{userData?.user.course_module}</p>
       </section>
       <section>
         <div>
@@ -40,26 +41,46 @@ export const HomePage = () => {
           </button>
         </div>
         <StyledUl>
-          {techs?.map((element) => (
-            <Card
-              key={element.id}
-              type={"modifyTech"}
-              techName={element.title}
-              level={element.status}
-              onClick={openModal}
-            />
-          ))}
+          {techs?.length === 0 ? (
+            <h2>Não há tecnologias cadastradas ainda.</h2>
+          ) : (
+            techs?.map((element) => (
+              <Card
+                key={element.id}
+                type={"modifyTech"}
+                techName={element.title}
+                level={element.status}
+                functionName={openModal}
+              />
+            ))
+          )}
         </StyledUl>
       </section>
       {newTechModal && (
-        <Modal newTechModal={newTechModal} setNewTechModal={setNewTechModal} />
-      )}
-      {modifyTechModal && (
         <Modal
-          modifyTechModal={modifyTechModal}
+          userData={userData}
+          newTechModal={newTechModal}
+          setCurrentRoute={setCurrentRoute}
+          setNewTechModal={setNewTechModal}
           setModifyTechModal={setModifyTechModal}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          techs={techs}
+          setTechs={setTechs}
         />
       )}
+      {/* {modifyTechModal && (
+        <Modal
+          userData={userData}
+          newTechModal={newTechModal}
+          setCurrentRoute={setCurrentRoute}
+          setNewTechModal={setNewTechModal}
+          setModifyTechModal={setModifyTechModal}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          setTechs={setTechs}
+        />
+      )} */}
     </StyledHome>
   );
 };

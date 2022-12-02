@@ -4,21 +4,71 @@ import { StyledModal } from "./style";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { modalSchema } from "./modalSchema";
+
+import { toast } from "react-toastify";
+import { toastConfig } from "../../components/ToastConfig";
+import { api } from "../../services/api";
+import { FormError } from "../FormError";
+import { useEffect } from "react";
 
 export const Modal = ({
+  techs,
+  setTechs,
+  userData,
   newTechModal = false,
-  modifyTechModal = false,
   setNewTechModal,
   setModifyTechModal,
+  setCurrentRoute,
+  isLoading,
+  setIsLoading,
 }) => {
   const closeModal = (event) => {
     console.log(event);
-
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);
   };
-  const { register, handleSubmit } = useForm({
-    resolver: yupResolver(),
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(modalSchema),
   });
+
+  const postNewTech = async (objectData) => {
+    try {
+      const request = await toast.promise(
+        api.post("users/techs", objectData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userData.token}`,
+          },
+        }),
+        {
+          pending: "Verificando dados...",
+          success: "Nova tech cadastrada!",
+          error: "error",
+        },
+        toastConfig
+      );
+      setTechs([...techs, request.data]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+      reset();
+    }
+  };
+
+  const onSubmitFunction = (data) => {
+    if (!isLoading) {
+      console.log(techs);
+      setIsLoading(false);
+      postNewTech(data);
+    }
+  };
 
   return (
     <StyledModal>
@@ -31,15 +81,17 @@ export const Modal = ({
           )}
           <p onClick={closeModal}>x</p>
         </div>
-        <form>
+        <form onSubmit={handleSubmit(onSubmitFunction)}>
           <Input
-            name={"name"}
+            name={"title"}
             type="text"
             label="Nome da tecnologia"
             placeholder={"Digite a tecnologia"}
             register={register}
             required
           />
+          {errors.title?.message && <FormError text={errors.title.message} />}
+
           <Input
             name={"status"}
             type="text"
@@ -48,12 +100,22 @@ export const Modal = ({
             register={register}
             required
           />
+          {errors.status?.message && <FormError text={errors.status.message} />}
+
           {newTechModal ? (
-            <Button text="Cadastrar Tecnologia" color="primary" link="/" />
+            <Button
+              text="Cadastrar"
+              setCurrentRoute={setCurrentRoute}
+              color="primary"
+            />
           ) : (
             <div>
-              <Button text="Salvar Alterações" color="primary" link="/home" />
-              <Button type="button" text="Cancelar" color="grey" link="/home" />
+              <Button
+                text="Salvar Alterações"
+                setCurrentRoute={setCurrentRoute}
+                color="primary"
+              />
+              <Button type="button" text="Cancelar" color="grey" />
             </div>
           )}
         </form>

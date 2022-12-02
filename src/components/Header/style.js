@@ -5,7 +5,7 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 300px;
+  max-width: 370px;
   margin: 0 auto;
 
   h1 {

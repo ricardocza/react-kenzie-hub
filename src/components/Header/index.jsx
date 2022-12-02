@@ -1,12 +1,10 @@
-import { Link } from "react-router-dom";
 import { StyledHeader } from "./style";
-import { useNavigate } from "react-router-dom";
 
-export const Header = ({ setUserData }) => {
-  const navigate = useNavigate();
+export const Header = ({ setCurrentRoute, setUserData }) => {
   const clearStorage = () => {
     localStorage.clear();
-    navigate("/");
+    setCurrentRoute("/");
+    // setUserData("");
   };
 
   return (

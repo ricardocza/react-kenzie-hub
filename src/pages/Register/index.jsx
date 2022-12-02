@@ -13,7 +13,12 @@ import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 
-export const RegisterPage = () => {
+export const RegisterPage = ({
+  setCurrentRoute,
+  setUserData,
+  isLoading,
+  setIsLoading,
+}) => {
   const quarters = [
     "Primeiro Módulo",
     "Segundo Módulo",
@@ -23,8 +28,7 @@ export const RegisterPage = () => {
     "Sexto Módulo",
   ];
   const [buttonColor, setButtonColor] = useState("primaryDisabled");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -42,21 +46,16 @@ export const RegisterPage = () => {
         api.post("users", objectData),
         {
           pending: "Verificando dados...",
-          success: "Email cadastrado com sucesso!",
+          success: "Email cadastrado com sucesso! Redirecionando para o login",
           error: "Email já cadastrado",
         },
         toastConfig
       );
       return request;
     } catch (error) {
-      setIsError(true);
-
       return error;
     } finally {
       setIsLoading(false);
-      if (!isError) {
-        setIsError(true);
-      }
     }
   };
 
@@ -72,7 +71,12 @@ export const RegisterPage = () => {
       };
       setIsLoading(true);
       const registerResponse = await requestRegistrer(objRequest);
-      registerResponse.status === 201 && reset();
+      if (registerResponse.status === 201) {
+        reset();
+        setTimeout(() => {
+          setCurrentRoute("/");
+        }, 2500);
+      }
     }
   };
 
@@ -85,7 +89,7 @@ export const RegisterPage = () => {
 
   return (
     <StyledRegister>
-      <Header />
+      <Header setCurrentRoute={setCurrentRoute} setUserData={setUserData} />
       <form onSubmit={handleSubmit(onSubmitFunction)} noValidate>
         <h2>Crie sua conta</h2>
         <p>Rápido e grátis, vamos nessa!</p>
@@ -164,7 +168,11 @@ export const RegisterPage = () => {
           <FormError text={errors.course_module.message} />
         )}
 
-        <Button text="Cadastrar" color={buttonColor} />
+        <Button
+          text="Cadastrar"
+          setCurrentRoute={setCurrentRoute}
+          color={buttonColor}
+        />
       </form>
     </StyledRegister>
   );

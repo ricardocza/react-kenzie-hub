@@ -5,7 +5,8 @@ export const registerSchema = yup.object().shape({
   name: yup
     .string()
     .required("Campo obrigatório")
-    .min(5, "É necessário pelo menos 5 caracteres"),
+    .min(5, "É necessário pelo menos 5 caracteres")
+    .max(24, "O nome pode conter no máximo 24 caracteres"),
   email: yup.string().required("Campo obrigatório").email("E-mail inválido"),
   password: yup
     .string()
