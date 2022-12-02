@@ -10,9 +10,9 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 import { api } from "../../services/api";
 import { FormError } from "../FormError";
-import { useEffect } from "react";
 
 export const Modal = ({
+  techSelected,
   techs,
   setTechs,
   userData,
@@ -24,7 +24,6 @@ export const Modal = ({
   setIsLoading,
 }) => {
   const closeModal = (event) => {
-    console.log(event);
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);
   };
 
@@ -49,7 +48,7 @@ export const Modal = ({
         {
           pending: "Verificando dados...",
           success: "Nova tech cadastrada!",
-          error: "error",
+          error: "Tech já cadastrada!",
         },
         toastConfig
       );
@@ -64,7 +63,6 @@ export const Modal = ({
 
   const onSubmitFunction = (data) => {
     if (!isLoading) {
-      console.log(techs);
       setIsLoading(false);
       postNewTech(data);
     }
@@ -115,7 +113,7 @@ export const Modal = ({
                 setCurrentRoute={setCurrentRoute}
                 color="primary"
               />
-              <Button type="button" text="Cancelar" color="grey" />
+              <Button type="button" text="Excluir" color="grey" />
             </div>
           )}
         </form>
