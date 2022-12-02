@@ -12,6 +12,7 @@ import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
+
 export const RegisterPage = () => {
   const quarters = [
     "Primeiro Módulo",
@@ -70,8 +71,8 @@ export const RegisterPage = () => {
         course_module: data.course_module,
       };
       setIsLoading(true);
-      const promiseResponse = await requestRegistrer(objRequest);
-      promiseResponse.status === 201 && reset();
+      const registerResponse = await requestRegistrer(objRequest);
+      registerResponse.status === 201 && reset();
     }
   };
 

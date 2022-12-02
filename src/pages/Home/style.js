@@ -16,6 +16,9 @@ export const StyledHome = styled.div`
     flex-direction: column;
     gap: 10px;
   }
+  header + section > p {
+    color: var(--color-grey2);
+  }
 
   & > :nth-child(3) {
     display: flex;

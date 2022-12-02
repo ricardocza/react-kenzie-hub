@@ -48,6 +48,13 @@ const GlobalStyle = createGlobalStyle`
         font-size: 0.75rem;
         font-weight: 500;
     }
+    button {
+        width: 100%;
+        height: 38.5px;
+        color: var(--color-grey0);
+        border-radius: 4px;
+        cursor: pointer;
+    }
    
     a {
         color: unset;
