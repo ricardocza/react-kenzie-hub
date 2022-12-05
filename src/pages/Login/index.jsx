@@ -90,13 +90,7 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
           setCurrentRoute={setCurrentRoute}
         />
         <p>Ainda não possui uma conta?</p>
-        <Button
-          type="button"
-          text="Cadastre-se"
-          color="grey"
-          newRoute="/register"
-          setCurrentRoute={setCurrentRoute}
-        />
+        <Link to={"/register"}>Cadastre-se</Link>
       </StyledLogin>
     </>
   );
