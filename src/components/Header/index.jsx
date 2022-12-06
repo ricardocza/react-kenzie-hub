@@ -5,6 +5,7 @@ export const Header = ({ setCurrentRoute, setUserData }) => {
   const clearStorage = () => {
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USERID");
+    setUserData(null);
     setCurrentRoute("/");
   };
 
