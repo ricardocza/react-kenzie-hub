@@ -3,9 +3,9 @@ import { StyledHeader } from "./style";
 
 export const Header = ({ setCurrentRoute, setUserData }) => {
   const clearStorage = () => {
-    localStorage.clear();
+    localStorage.removeItem("@TOKEN");
+    localStorage.removeItem("@USERID");
     setCurrentRoute("/");
-    // setUserData("");
   };
 
   return (

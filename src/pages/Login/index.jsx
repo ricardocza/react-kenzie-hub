@@ -51,7 +51,11 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
   const postLogin = async (data) => {
     const loginResponse = await requestLogin(data);
     if (loginResponse.status === 200) {
-      localStorage.setItem("userData", JSON.stringify(loginResponse.data));
+      const token = loginResponse.data.token;
+      const userId = loginResponse.data.user.id;
+
+      localStorage.setItem("@TOKEN", token);
+      localStorage.setItem("@USERID", userId);
       setUserData(loginResponse.data);
       setTechs(loginResponse.data.user.techs);
       setCurrentRoute("/home");
