@@ -46,7 +46,7 @@ export const RegisterPage = ({
         api.post("users", objectData),
         {
           pending: "Verificando dados...",
-          success: "Email cadastrado com sucesso! Redirecionando para o login",
+          success: "Email cadastrado com sucesso!",
           error: "Email já cadastrado",
         },
         toastConfig
@@ -72,10 +72,7 @@ export const RegisterPage = ({
       setIsLoading(true);
       const registerResponse = await requestRegistrer(objRequest);
       if (registerResponse.status === 201) {
-        reset();
-        setTimeout(() => {
-          setCurrentRoute("/");
-        }, 2500);
+        setCurrentRoute("/");
       }
     }
   };
