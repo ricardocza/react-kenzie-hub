@@ -6,11 +6,11 @@ import GlobalStyle from "./styles/GlobalStyle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
-import { GlobalProvider } from "./context/GlobalContext.jsx";
+import { UserProvider } from "./context/UserContext.jsx";
 
 function App() {
   return (
-    <GlobalProvider>
+    <UserProvider>
       <div className="App">
         <ToastContainer
           position="top-right"
@@ -31,7 +31,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
         </Routes>
       </div>
-    </GlobalProvider>
+    </UserProvider>
   );
 }
 

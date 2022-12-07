@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const GlobalContext = createContext({});
+export const UserContext = createContext({});
 
-export const GlobalProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState();
   const [currentRoute, setCurrentRoute] = useState("/");
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ export const GlobalProvider = ({ children }) => {
   }, [currentRoute]);
 
   return (
-    <GlobalContext.Provider
+    <UserContext.Provider
       value={{
         userData,
         setUserData,
@@ -26,6 +26,6 @@ export const GlobalProvider = ({ children }) => {
       }}
     >
       {children}
-    </GlobalContext.Provider>
+    </UserContext.Provider>
   );
 };

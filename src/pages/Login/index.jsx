@@ -13,10 +13,10 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContext";
+import { UserContext } from "../../context/UserContext";
 
 export const LoginPage = ({ setTechs }) => {
-  const { setUserData, setCurrentRoute } = useContext(GlobalContext);
+  const { setUserData, setCurrentRoute } = useContext(UserContext);
 
   // isLoading, setIsLoading
 

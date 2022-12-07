@@ -13,10 +13,10 @@ import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContext";
+import { UserContext } from "../../context/UserContext";
 
 export const RegisterPage = ({ isLoading, setIsLoading }) => {
-  const { setCurrentRoute, setUserData } = useContext(GlobalContext);
+  const { setCurrentRoute, setUserData } = useContext(UserContext);
 
   const quarters = [
     "Primeiro Módulo",

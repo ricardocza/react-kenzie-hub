@@ -5,11 +5,11 @@ import { StyledHome, StyledUl } from "./style";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../../components/Card";
 import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContext";
+import { UserContext } from "../../context/UserContext";
 import { api } from "../../services/api";
 
 export const HomePage = ({}) => {
-  const { userData, setUserData, setIsLoading } = useContext(GlobalContext);
+  const { userData, setUserData, setIsLoading } = useContext(UserContext);
 
   const [techs, setTechs] = useState();
   const [techSelected, setTechSelected] = useState("");

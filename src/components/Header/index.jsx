@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../context/GlobalContext";
+import { UserContext } from "../../context/UserContext";
 import { StyledHeader } from "./style";
 
 export const Header = () => {
-  const { setUserData, setCurrentRoute } = useContext(GlobalContext);
+  const { setUserData, setCurrentRoute } = useContext(UserContext);
 
   const clearStorage = () => {
     localStorage.removeItem("@TOKEN");

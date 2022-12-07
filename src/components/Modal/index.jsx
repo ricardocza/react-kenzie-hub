@@ -11,7 +11,7 @@ import { toastConfig } from "../../components/ToastConfig";
 import { api } from "../../services/api";
 import { FormError } from "../FormError";
 import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContext";
+import { UserContext } from "../../context/UserContext";
 
 export const Modal = ({
   techSelected,
@@ -21,7 +21,7 @@ export const Modal = ({
   setCurrentRoute,
 }) => {
   const { userData, techs, setTechs, isLoading, setIsLoading } =
-    useContext(GlobalContext);
+    useContext(UserContext);
 
   const closeModal = (event) => {
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);
