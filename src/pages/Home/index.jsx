@@ -4,21 +4,39 @@ import { Modal } from "../../components/Modal";
 import { StyledHome, StyledUl } from "./style";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../../components/Card";
+import { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
+import { api } from "../../services/api";
 
-export const HomePage = ({
-  userData,
-  setUserData,
-  techs,
-  setTechs,
-  setCurrentRoute,
-  isLoading,
-  setIsLoading,
-}) => {
+export const HomePage = ({}) => {
+  const { userData, setUserData, setIsLoading } = useContext(GlobalContext);
+
+  const [techs, setTechs] = useState();
   const [techSelected, setTechSelected] = useState("");
   const [newTechModal, setNewTechModal] = useState(false);
   const [modifyTechModal, setModifyTechModal] = useState(false);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    setIsLoading(true);
+    const updateTechs = async () => {
+      try {
+        const currentToken = localStorage.getItem("@TOKEN");
+        const currentId = localStorage.getItem("@USERID");
+
+        const response = await api.get(`users/${currentId}`, {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${currentToken}`,
+        });
+        setTechs(response.data.techs);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    updateTechs();
+  }, [techs]);
 
   const openModal = (event) => {
     if (event.target.className === "newTech") {
@@ -31,7 +49,7 @@ export const HomePage = ({
 
   return (
     <StyledHome>
-      <Header setCurrentRoute={setCurrentRoute} setUserData={setUserData} />
+      <Header />
       <section>
         <h2>Olá, {userData?.user.name}</h2>
         <p>{userData?.user.course_module}</p>
@@ -64,11 +82,8 @@ export const HomePage = ({
         <Modal
           userData={userData}
           newTechModal={newTechModal}
-          setCurrentRoute={setCurrentRoute}
           setNewTechModal={setNewTechModal}
           setModifyTechModal={setModifyTechModal}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
           techs={techs}
           setTechs={setTechs}
         />

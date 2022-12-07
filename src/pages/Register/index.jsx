@@ -12,13 +12,12 @@ import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
+import { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
-export const RegisterPage = ({
-  setCurrentRoute,
-  setUserData,
-  isLoading,
-  setIsLoading,
-}) => {
+export const RegisterPage = ({ isLoading, setIsLoading }) => {
+  const { setCurrentRoute, setUserData } = useContext(GlobalContext);
+
   const quarters = [
     "Primeiro Módulo",
     "Segundo Módulo",
@@ -86,7 +85,7 @@ export const RegisterPage = ({
 
   return (
     <StyledRegister>
-      <Header setCurrentRoute={setCurrentRoute} setUserData={setUserData} />
+      <Header />
       <form onSubmit={handleSubmit(onSubmitFunction)} noValidate>
         <h2>Crie sua conta</h2>
         <p>Rápido e grátis, vamos nessa!</p>
@@ -165,11 +164,7 @@ export const RegisterPage = ({
           <FormError text={errors.course_module.message} />
         )}
 
-        <Button
-          text="Cadastrar"
-          setCurrentRoute={setCurrentRoute}
-          color={buttonColor}
-        />
+        <Button text="Cadastrar" color={buttonColor} />
       </form>
     </StyledRegister>
   );

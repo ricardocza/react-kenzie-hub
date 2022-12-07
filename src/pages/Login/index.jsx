@@ -1,6 +1,5 @@
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
-import { useEffect, useState } from "react";
 import { StyledLogin } from "./sytyle";
 
 import { useForm } from "react-hook-form";
@@ -10,14 +9,16 @@ import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
 
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
+import { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
-export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+export const LoginPage = ({ setTechs }) => {
+  const { setUserData, setCurrentRoute } = useContext(GlobalContext);
+
+  // isLoading, setIsLoading
 
   const {
     register,
@@ -43,8 +44,6 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
     } catch (error) {
       console.log(error);
       return error;
-    } finally {
-      console.log(setIsLoading(false));
     }
   };
 
@@ -57,7 +56,6 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
       localStorage.setItem("@TOKEN", token);
       localStorage.setItem("@USERID", userId);
       setUserData(loginResponse.data);
-      setTechs(loginResponse.data.user.techs);
       setCurrentRoute("/home");
     }
   };
@@ -88,13 +86,11 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
         {errors.password?.message && (
           <FormError text={errors.password.message} />
         )}
-        <Button
-          text="Entrar"
-          color="primary"
-          setCurrentRoute={setCurrentRoute}
-        />
+        <Button text="Entrar" color="primary" />
         <p>Ainda não possui uma conta?</p>
-        <Link to={"/register"}>Cadastre-se</Link>
+        <Link onClick={() => setCurrentRoute("/register")} to={"/register"}>
+          Cadastre-se
+        </Link>
       </StyledLogin>
     </>
   );
