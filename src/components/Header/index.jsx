@@ -1,17 +1,24 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { GlobalContext } from "../../context/GlobalContext";
 import { StyledHeader } from "./style";
 
-export const Header = ({ setCurrentRoute, setUserData }) => {
+export const Header = () => {
+  const { setUserData, setCurrentRoute } = useContext(GlobalContext);
+
   const clearStorage = () => {
-    localStorage.clear();
+    localStorage.removeItem("@TOKEN");
+    localStorage.removeItem("@USERID");
+    setUserData(null);
     setCurrentRoute("/");
-    // setUserData("");
   };
 
   return (
     <StyledHeader>
       <h1>Kenzie Hub</h1>
-
-      <button onClick={clearStorage}>Voltar</button>
+      <Link onClick={clearStorage} to={"/"}>
+        Voltar
+      </Link>
     </StyledHeader>
   );
 };
