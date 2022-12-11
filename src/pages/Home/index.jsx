@@ -8,36 +8,21 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { api } from "../../services/api";
 import { ModalModify } from "../../components/ModalModify";
+import { TechContext, TechProvider } from "../../context/TechContext";
 
 export const HomePage = () => {
   const { userData, setUserData, setIsLoading, isLoading } =
     useContext(UserContext);
 
-  const [techs, setTechs] = useState();
-  const [techSelected, setTechSelected] = useState("");
+  const { techs, setTechs, techSelected, setTechSelected, updateTechs } =
+    useContext(TechContext);
+
   const [newTechModal, setNewTechModal] = useState(false);
   const [modifyTechModal, setModifyTechModal] = useState(false);
-  const [deleteTechModal, setDeleteTechMOdal] = useState(false);
 
   useEffect(() => {
-    const updateTechs = async () => {
-      try {
-        const currentToken = localStorage.getItem("@TOKEN");
-        const currentId = localStorage.getItem("@USERID");
-
-        const response = await api.get(`users/${currentId}`, {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${currentToken}`,
-        });
-        setTechs(response.data.techs);
-      } catch (error) {
-        console.log(error);
-      } finally {
-      }
-    };
-
     updateTechs();
-  }, [techs]);
+  }, []);
 
   const openModal = (event) => {
     if (event.target.className === "newTech") {
@@ -52,6 +37,7 @@ export const HomePage = () => {
   if (isLoading) return null;
 
   return userData ? (
+    // <TechProvider>
     <StyledHome>
       <Header />
       <section>
@@ -85,28 +71,21 @@ export const HomePage = () => {
 
       {newTechModal && (
         <Modal
-          userData={userData}
           newTechModal={newTechModal}
           setNewTechModal={setNewTechModal}
           setModifyTechModal={setModifyTechModal}
-          techs={techs}
-          setTechs={setTechs}
         />
       )}
       {modifyTechModal && (
         <ModalModify
-          userData={userData}
           newTechModal={newTechModal}
           setNewTechModal={setNewTechModal}
           setModifyTechModal={setModifyTechModal}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          setTechs={setTechs}
-          techSelected={techSelected}
         />
       )}
     </StyledHome>
   ) : (
+    // </TechProvider>
     <Navigate to="/" />
   );
 };

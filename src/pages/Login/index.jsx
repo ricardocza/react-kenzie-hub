@@ -16,7 +16,7 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
 export const LoginPage = ({ setTechs }) => {
-  const { setUserData, postLogin } = useContext(UserContext);
+  const { postLogin } = useContext(UserContext);
 
   const {
     register,

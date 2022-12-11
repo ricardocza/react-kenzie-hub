@@ -15,6 +15,7 @@ export const registerSchema = yup.object().shape({
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       "Deve conter, maiúscula, minúscula, numero, caractere especial e no mínimo 8 caracteres "
     ),
+
   confirmPassword: yup
     .string()
     .required("Campo obrigatório")
