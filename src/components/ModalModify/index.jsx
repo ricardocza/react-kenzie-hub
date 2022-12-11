@@ -1,7 +1,6 @@
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { StyledModal } from "./style";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { modalSchema } from "./modalSchema";
@@ -12,13 +11,12 @@ import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { toastConfig } from "../ToastConfig";
 import { TechContext } from "../../context/TechContext";
+import { ModalContext } from "../../context/ModalContext";
 
-export const ModalModify = ({
-  newTechModal = false,
-  setNewTechModal,
-  setModifyTechModal,
-}) => {
+export const ModalModify = () => {
   const { updateTechs, techSelected } = useContext(TechContext);
+  const { newTechModal, setNewTechModal, setModifyTechModal } =
+    useContext(ModalContext);
 
   const closeModal = (event) => {
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);

@@ -13,15 +13,11 @@ import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { toastConfig } from "../ToastConfig";
 import { TechContext } from "../../context/TechContext";
+import { ModalContext } from "../../context/ModalContext";
 
-export const Modal = ({
-  techSelected,
-  newTechModal = false,
-  setNewTechModal,
-  setModifyTechModal,
-}) => {
-  const { isLoading, setIsLoading } = useContext(UserContext);
+export const Modal = ({ setModifyTechModal }) => {
   const { techs, setTechs } = useContext(TechContext);
+  const { newTechModal, setNewTechModal } = useContext(ModalContext);
 
   const closeModal = (event) => {
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);

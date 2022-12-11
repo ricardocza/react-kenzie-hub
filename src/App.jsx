@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { UserProvider } from "./context/UserContext.jsx";
 import { TechProvider } from "./context/TechContext.jsx";
+import { ModalProvider } from "./context/ModalContext.jsx";
 
 function App() {
   return (
@@ -33,7 +34,9 @@ function App() {
             path="/home"
             element={
               <TechProvider>
-                <HomePage />
+                <ModalProvider>
+                  <HomePage />
+                </ModalProvider>
               </TechProvider>
             }
           />
