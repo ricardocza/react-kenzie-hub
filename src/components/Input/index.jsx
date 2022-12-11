@@ -7,8 +7,7 @@ export const Input = ({
   label,
   placeholder,
   register,
-  required,
-  disabled = false,
+  readOnly = false,
   value,
 }) => {
   const showPassword = (event) => {
@@ -26,7 +25,9 @@ export const Input = ({
         <input
           type={type}
           placeholder={placeholder}
-          {...register(name, { required })}
+          defaultValue={value}
+          readOnly={readOnly}
+          {...register(name)}
         />
         {type === "password" ? (
           <span onMouseDown={showPassword} onMouseUp={hidePassword}>

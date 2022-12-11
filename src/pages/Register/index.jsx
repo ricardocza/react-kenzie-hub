@@ -12,13 +12,15 @@ import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
-export const RegisterPage = ({
-  setCurrentRoute,
-  setUserData,
-  isLoading,
-  setIsLoading,
-}) => {
+export const RegisterPage = () => {
+  const { isLoading, setIsLoading } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
   const quarters = [
     "Primeiro Módulo",
     "Segundo Módulo",
@@ -34,7 +36,6 @@ export const RegisterPage = ({
     handleSubmit,
     watch,
     formState: { errors },
-    reset,
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(registerSchema),
@@ -72,7 +73,7 @@ export const RegisterPage = ({
       setIsLoading(true);
       const registerResponse = await requestRegistrer(objRequest);
       if (registerResponse.status === 201) {
-        setCurrentRoute("/");
+        navigate("/");
       }
     }
   };
@@ -86,7 +87,7 @@ export const RegisterPage = ({
 
   return (
     <StyledRegister>
-      <Header setCurrentRoute={setCurrentRoute} setUserData={setUserData} />
+      <Header />
       <form onSubmit={handleSubmit(onSubmitFunction)} noValidate>
         <h2>Crie sua conta</h2>
         <p>Rápido e grátis, vamos nessa!</p>
@@ -165,11 +166,7 @@ export const RegisterPage = ({
           <FormError text={errors.course_module.message} />
         )}
 
-        <Button
-          text="Cadastrar"
-          setCurrentRoute={setCurrentRoute}
-          color={buttonColor}
-        />
+        <Button text="Cadastrar" color={buttonColor} />
       </form>
     </StyledRegister>
   );

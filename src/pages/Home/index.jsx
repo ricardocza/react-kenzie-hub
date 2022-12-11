@@ -1,40 +1,45 @@
-import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { Modal } from "../../components/Modal";
 import { StyledHome, StyledUl } from "./style";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Card } from "../../components/Card";
 
-export const HomePage = ({
-  userData,
-  setUserData,
-  techs,
-  setTechs,
-  setCurrentRoute,
-  isLoading,
-  setIsLoading,
-}) => {
-  const [techSelected, setTechSelected] = useState("");
-  const [newTechModal, setNewTechModal] = useState(false);
-  const [modifyTechModal, setModifyTechModal] = useState(false);
+import { useContext, useEffect } from "react";
+import { UserContext } from "../../context/UserContext";
 
-  const navigate = useNavigate();
+import { ModalModify } from "../../components/ModalModify";
+import { TechContext } from "../../context/TechContext";
+import { ModalContext } from "../../context/ModalContext";
+
+export const HomePage = () => {
+  const { userData, isLoading } = useContext(UserContext);
+
+  const { techs, setTechSelected, updateTechs } = useContext(TechContext);
+
+  const { newTechModal, setNewTechModal, modifyTechModal, setModifyTechModal } =
+    useContext(ModalContext);
+
+  useEffect(() => {
+    updateTechs();
+  }, []);
 
   const openModal = (event) => {
     if (event.target.className === "newTech") {
       setNewTechModal(!newTechModal);
     } else {
       setModifyTechModal(!modifyTechModal);
-      setTechSelected(event.target.children[0].innerText);
+      setTechSelected(event.target);
     }
   };
 
-  return (
+  if (isLoading) return null;
+
+  return userData ? (
     <StyledHome>
-      <Header setCurrentRoute={setCurrentRoute} setUserData={setUserData} />
+      <Header />
       <section>
-        <h2>Olá, {userData?.user.name}</h2>
-        <p>{userData?.user.course_module}</p>
+        <h2>Olá, {userData?.name}</h2>
+        <p>{userData?.course_module}</p>
       </section>
       <section>
         <div>
@@ -60,32 +65,12 @@ export const HomePage = ({
           )}
         </StyledUl>
       </section>
-      {newTechModal && (
-        <Modal
-          userData={userData}
-          newTechModal={newTechModal}
-          setCurrentRoute={setCurrentRoute}
-          setNewTechModal={setNewTechModal}
-          setModifyTechModal={setModifyTechModal}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          techs={techs}
-          setTechs={setTechs}
-        />
-      )}
-      {/* {modifyTechModal && (
-        <Modal
-          userData={userData}
-          newTechModal={newTechModal}
-          setCurrentRoute={setCurrentRoute}
-          setNewTechModal={setNewTechModal}
-          setModifyTechModal={setModifyTechModal}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          setTechs={setTechs}
-          techSelected={techSelected}
-        />
-      )} */}
+
+      {newTechModal && <Modal />}
+
+      {modifyTechModal && <ModalModify />}
     </StyledHome>
+  ) : (
+    <Navigate to="/" />
   );
 };

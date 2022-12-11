@@ -1,6 +1,5 @@
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
-import { useEffect, useState } from "react";
 import { StyledLogin } from "./sytyle";
 
 import { useForm } from "react-hook-form";
@@ -10,14 +9,14 @@ import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
 
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
-export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+export const LoginPage = ({ setTechs }) => {
+  const { postLogin } = useContext(UserContext);
 
   const {
     register,
@@ -27,40 +26,6 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
     mode: "onBlur",
     resolver: yupResolver(loginSchema),
   });
-
-  const requestLogin = async (data) => {
-    try {
-      const response = await toast.promise(
-        api.post("sessions", data),
-        {
-          pending: "Verificando dados...",
-          success: "Logado com sucesso!",
-          error: "Email ou senha inválidos",
-        },
-        toastConfig
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-      return error;
-    } finally {
-      console.log(setIsLoading(false));
-    }
-  };
-
-  const postLogin = async (data) => {
-    const loginResponse = await requestLogin(data);
-    if (loginResponse.status === 200) {
-      const token = loginResponse.data.token;
-      const userId = loginResponse.data.user.id;
-
-      localStorage.setItem("@TOKEN", token);
-      localStorage.setItem("@USERID", userId);
-      setUserData(loginResponse.data);
-      setTechs(loginResponse.data.user.techs);
-      setCurrentRoute("/home");
-    }
-  };
 
   return (
     <>
@@ -88,11 +53,7 @@ export const LoginPage = ({ setCurrentRoute, setUserData, setTechs }) => {
         {errors.password?.message && (
           <FormError text={errors.password.message} />
         )}
-        <Button
-          text="Entrar"
-          color="primary"
-          setCurrentRoute={setCurrentRoute}
-        />
+        <Button text="Entrar" color="primary" />
         <p>Ainda não possui uma conta?</p>
         <Link to={"/register"}>Cadastre-se</Link>
       </StyledLogin>

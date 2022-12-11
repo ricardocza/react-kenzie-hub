@@ -1,13 +1,11 @@
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { StyledModal } from "./style";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { modalSchema } from "./modalSchema";
 import { FormError } from "../FormError";
 import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
 import { Select } from "../Select";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
@@ -15,9 +13,10 @@ import { toastConfig } from "../ToastConfig";
 import { TechContext } from "../../context/TechContext";
 import { ModalContext } from "../../context/ModalContext";
 
-export const Modal = ({ setModifyTechModal }) => {
-  const { techs, setTechs } = useContext(TechContext);
-  const { newTechModal, setNewTechModal } = useContext(ModalContext);
+export const ModalModify = () => {
+  const { updateTechs, techSelected } = useContext(TechContext);
+  const { newTechModal, setNewTechModal, setModifyTechModal } =
+    useContext(ModalContext);
 
   const closeModal = (event) => {
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);
@@ -29,7 +28,6 @@ export const Modal = ({ setModifyTechModal }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(modalSchema),
   });
@@ -37,7 +35,35 @@ export const Modal = ({ setModifyTechModal }) => {
   const onSubmitFunction = async (data) => {
     try {
       const request = await toast.promise(
-        api.post("users/techs", data, {
+        api.put(
+          `users/techs/${techSelected.id}`,
+          { status: data.status },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ),
+        {
+          pending: "Verificando dados...",
+          success: "Tech alterada com sucesso!",
+          error: "Tech já cadastrada!",
+        },
+        toastConfig
+      );
+      updateTechs();
+      setModifyTechModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+    // const response = await modifyTech(data, token, techSelected);
+  };
+
+  const removeTech = async () => {
+    try {
+      const request = await toast.promise(
+        api.delete(`users/techs/${techSelected.id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -45,15 +71,17 @@ export const Modal = ({ setModifyTechModal }) => {
         }),
         {
           pending: "Verificando dados...",
-          success: "Nova tech cadastrada!",
+          success: "Tech removida!",
           error: "Tech já cadastrada!",
         },
         toastConfig
       );
-      setTechs([...techs, request.data]);
-      reset();
+      updateTechs();
+      return request;
     } catch (error) {
       console.log(error);
+    } finally {
+      setModifyTechModal(false);
     }
   };
 
@@ -61,23 +89,22 @@ export const Modal = ({ setModifyTechModal }) => {
     <StyledModal>
       <section>
         <div>
-          <h3>Cadastrar Tecnologia</h3>
-
+          <h3>Tecnologia Detalhes</h3>
           <p onClick={closeModal}>x</p>
         </div>
         <form onSubmit={handleSubmit(onSubmitFunction)}>
           <Input
-            value={""}
-            name="title"
+            value={techSelected.children[0].innerText}
+            name="titleModify"
             type="text"
             label="Nome da tecnologia"
             placeholder={"Digite a tecnologia"}
             register={register}
+            readOnly={true}
           />
-          {errors.title?.message && <FormError text={errors.title.message} />}
 
           <Select
-            name={"status"}
+            name="status"
             placeholder={"Selecione o nível"}
             options={["Iniciante", "Intermediário", "Avançado"]}
             textLabel="Selecionar status"
@@ -86,7 +113,15 @@ export const Modal = ({ setModifyTechModal }) => {
           />
           {errors.status?.message && <FormError text={errors.status.message} />}
 
-          <Button text="Cadastrar" color="primary" />
+          <div>
+            <Button text="Salvar Alterações" color="primary" />
+            <Button
+              onClick={removeTech}
+              type="button"
+              text="Excluir"
+              color="grey"
+            />
+          </div>
         </form>
       </section>
     </StyledModal>
