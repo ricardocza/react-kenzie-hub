@@ -8,21 +8,20 @@ import { modalSchema } from "./modalSchema";
 import { FormError } from "../FormError";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import { DeleteTech, ModifyTech, PostNewTech } from "./requests";
 import { Select } from "../Select";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { toastConfig } from "../ToastConfig";
+import { TechContext } from "../../context/TechContext";
 
 export const Modal = ({
-  techs,
-  setTechs,
   techSelected,
   newTechModal = false,
   setNewTechModal,
   setModifyTechModal,
 }) => {
-  const { userData, isLoading, setIsLoading } = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(UserContext);
+  const { techs, setTechs } = useContext(TechContext);
 
   const closeModal = (event) => {
     newTechModal ? setNewTechModal(false) : setModifyTechModal(false);
@@ -40,58 +39,25 @@ export const Modal = ({
   });
 
   const onSubmitFunction = async (data) => {
-    if (newTechModal) {
-      try {
-        const request = await toast.promise(
-          api.post("users/techs", data, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          {
-            pending: "Verificando dados...",
-            success: "Nova tech cadastrada!",
-            error: "Tech já cadastrada!",
+    try {
+      const request = await toast.promise(
+        api.post("users/techs", data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          toastConfig
-        );
-        setTechs([...techs, request.data]);
-        reset();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      console.log(data);
-      // const response = await modifyTech(data, token, techSelected);
-    }
-  };
-
-  const removeTech = async () => {
-    if (!isLoading) {
-      try {
-        setIsLoading(true);
-        const request = await toast.promise(
-          api.delete(`users/techs/${techSelected.id}`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          {
-            pending: "Verificando dados...",
-            success: "Tech removida!",
-            error: "Tech já cadastrada!",
-          },
-          toastConfig
-        );
-        return request;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-        setModifyTechModal(false);
-      }
+        }),
+        {
+          pending: "Verificando dados...",
+          success: "Nova tech cadastrada!",
+          error: "Tech já cadastrada!",
+        },
+        toastConfig
+      );
+      setTechs([...techs, request.data]);
+      reset();
+    } catch (error) {
+      console.log(error);
     }
   };
 

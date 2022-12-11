@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { UserProvider } from "./context/UserContext.jsx";
+import { TechProvider } from "./context/TechContext.jsx";
 
 function App() {
   return (
@@ -28,7 +29,14 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route
+            path="/home"
+            element={
+              <TechProvider>
+                <HomePage />
+              </TechProvider>
+            }
+          />
         </Routes>
       </div>
     </UserProvider>

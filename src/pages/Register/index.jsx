@@ -16,7 +16,9 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-export const RegisterPage = ({ isLoading, setIsLoading }) => {
+export const RegisterPage = () => {
+  const { isLoading, setIsLoading } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const quarters = [
@@ -34,7 +36,6 @@ export const RegisterPage = ({ isLoading, setIsLoading }) => {
     handleSubmit,
     watch,
     formState: { errors },
-    reset,
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(registerSchema),
