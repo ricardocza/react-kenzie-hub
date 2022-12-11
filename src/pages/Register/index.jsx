@@ -159,6 +159,7 @@ export const RegisterPage = () => {
           name={"course_module"}
           options={quarters}
           textLabel="Selecionar módulo"
+          placeholder="Módulo que está cursando"
           register={register}
           required
         />
