@@ -1,24 +1,23 @@
-import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { Modal } from "../../components/Modal";
 import { StyledHome, StyledUl } from "./style";
 import { Navigate } from "react-router-dom";
 import { Card } from "../../components/Card";
-import { useContext } from "react";
+
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
-import { api } from "../../services/api";
+
 import { ModalModify } from "../../components/ModalModify";
-import { TechContext, TechProvider } from "../../context/TechContext";
+import { TechContext } from "../../context/TechContext";
+import { ModalContext } from "../../context/ModalContext";
 
 export const HomePage = () => {
-  const { userData, setUserData, setIsLoading, isLoading } =
-    useContext(UserContext);
+  const { userData, isLoading } = useContext(UserContext);
 
-  const { techs, setTechs, techSelected, setTechSelected, updateTechs } =
-    useContext(TechContext);
+  const { techs, setTechSelected, updateTechs } = useContext(TechContext);
 
-  const [newTechModal, setNewTechModal] = useState(false);
-  const [modifyTechModal, setModifyTechModal] = useState(false);
+  const { newTechModal, setNewTechModal, modifyTechModal, setModifyTechModal } =
+    useContext(ModalContext);
 
   useEffect(() => {
     updateTechs();
@@ -33,11 +32,9 @@ export const HomePage = () => {
     }
   };
 
-  // ALTERAR DEPOIS
   if (isLoading) return null;
 
   return userData ? (
-    // <TechProvider>
     <StyledHome>
       <Header />
       <section>
@@ -69,23 +66,11 @@ export const HomePage = () => {
         </StyledUl>
       </section>
 
-      {newTechModal && (
-        <Modal
-          newTechModal={newTechModal}
-          setNewTechModal={setNewTechModal}
-          setModifyTechModal={setModifyTechModal}
-        />
-      )}
-      {modifyTechModal && (
-        <ModalModify
-          newTechModal={newTechModal}
-          setNewTechModal={setNewTechModal}
-          setModifyTechModal={setModifyTechModal}
-        />
-      )}
+      {newTechModal && <Modal />}
+
+      {modifyTechModal && <ModalModify />}
     </StyledHome>
   ) : (
-    // </TechProvider>
     <Navigate to="/" />
   );
 };
