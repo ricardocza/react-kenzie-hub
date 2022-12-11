@@ -14,9 +14,10 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterPage = ({ isLoading, setIsLoading }) => {
-  const { setCurrentRoute, setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const quarters = [
     "Primeiro Módulo",
@@ -71,7 +72,7 @@ export const RegisterPage = ({ isLoading, setIsLoading }) => {
       setIsLoading(true);
       const registerResponse = await requestRegistrer(objRequest);
       if (registerResponse.status === 201) {
-        setCurrentRoute("/");
+        navigate("/");
       }
     }
   };

@@ -8,13 +8,12 @@ import { modalSchema } from "./modalSchema";
 import { FormError } from "../FormError";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import { DeleteTech, ModifyTech, PostNewTech } from "./requests";
 import { Select } from "../Select";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { toastConfig } from "../ToastConfig";
 
-export const Modal = ({
+export const ModalModify = ({
   techs,
   setTechs,
   techSelected,
@@ -40,31 +39,31 @@ export const Modal = ({
   });
 
   const onSubmitFunction = async (data) => {
-    if (newTechModal) {
-      try {
-        const request = await toast.promise(
-          api.post("users/techs", data, {
+    try {
+      const request = await toast.promise(
+        api.put(
+          `users/techs/${techSelected.id}`,
+          { status: data.status },
+          {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-          }),
-          {
-            pending: "Verificando dados...",
-            success: "Nova tech cadastrada!",
-            error: "Tech já cadastrada!",
-          },
-          toastConfig
-        );
-        setTechs([...techs, request.data]);
-        reset();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      console.log(data);
-      // const response = await modifyTech(data, token, techSelected);
+          }
+        ),
+        {
+          pending: "Verificando dados...",
+          success: "Tech alterada com sucesso!",
+          error: "Tech já cadastrada!",
+        },
+        toastConfig
+      );
+      setModifyTechModal(false);
+    } catch (error) {
+      console.log(error);
     }
+    console.log(data);
+    // const response = await modifyTech(data, token, techSelected);
   };
 
   const removeTech = async () => {
@@ -99,23 +98,22 @@ export const Modal = ({
     <StyledModal>
       <section>
         <div>
-          <h3>Cadastrar Tecnologia</h3>
-
+          <h3>Tecnologia Detalhes</h3>
           <p onClick={closeModal}>x</p>
         </div>
         <form onSubmit={handleSubmit(onSubmitFunction)}>
           <Input
-            value={""}
-            name="title"
+            value={techSelected.children[0].innerText}
+            name="titleModify"
             type="text"
             label="Nome da tecnologia"
             placeholder={"Digite a tecnologia"}
             register={register}
+            readOnly={true}
           />
-          {errors.title?.message && <FormError text={errors.title.message} />}
 
           <Select
-            name={"status"}
+            name="status"
             placeholder={"Selecione o nível"}
             options={["Iniciante", "Intermediário", "Avançado"]}
             textLabel="Selecionar status"
@@ -124,7 +122,15 @@ export const Modal = ({
           />
           {errors.status?.message && <FormError text={errors.status.message} />}
 
-          <Button text="Cadastrar" color="primary" />
+          <div>
+            <Button text="Salvar Alterações" color="primary" />
+            <Button
+              onClick={removeTech}
+              type="button"
+              text="Excluir"
+              color="grey"
+            />
+          </div>
         </form>
       </section>
     </StyledModal>

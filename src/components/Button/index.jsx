@@ -5,17 +5,23 @@ import {
   StyledButtonPrimary,
 } from "./style";
 
-export const Button = ({ text, color, type = "submit" }) => {
+export const Button = ({ text, color, type = "submit", onClick }) => {
   return (
     <>
       {color === "primary" && (
-        <StyledButtonPrimary type={type}>{text}</StyledButtonPrimary>
+        <StyledButtonPrimary onClick={onClick} type={type}>
+          {text}
+        </StyledButtonPrimary>
       )}
       {color === "primaryDisabled" && (
-        <StyledButtonDisabled type={type}>{text}</StyledButtonDisabled>
+        <StyledButtonDisabled onClick={onClick} type={type}>
+          {text}
+        </StyledButtonDisabled>
       )}
       {color === "grey" && (
-        <StyledButtonGrey type={type}>{text}</StyledButtonGrey>
+        <StyledButtonGrey onClick={onClick} type={type}>
+          {text}
+        </StyledButtonGrey>
       )}
     </>
   );
