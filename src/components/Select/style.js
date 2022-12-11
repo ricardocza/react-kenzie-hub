@@ -15,15 +15,5 @@ export const StyledSelect = styled.select`
   border: 1px solid var(--color-grey2);
   border-radius: 4px;
   color: var(--color-grey0);
-  font-size: 1rem;
+  font-size: 0.875rem;
 `;
-
-/* button, select {
-        width: 100%;        
-        height: 38.5px;
-        font-size: 1rem;
-        border: 1px solid var(--color-primary);
-        border-radius: 4px;
-        color: var(--color-grey0);
-        cursor: pointer;
-    } */

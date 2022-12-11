@@ -1,16 +1,18 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
-import { GlobalContext } from "../../context/GlobalContext";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 import { StyledHeader } from "./style";
 
 export const Header = () => {
-  const { setUserData, setCurrentRoute } = useContext(GlobalContext);
+  const { setUserData } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const clearStorage = () => {
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USERID");
     setUserData(null);
-    setCurrentRoute("/");
+    navigate("/");
   };
 
   return (

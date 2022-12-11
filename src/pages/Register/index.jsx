@@ -13,10 +13,11 @@ import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
 import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContext";
+import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterPage = ({ isLoading, setIsLoading }) => {
-  const { setCurrentRoute, setUserData } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   const quarters = [
     "Primeiro Módulo",
@@ -71,7 +72,7 @@ export const RegisterPage = ({ isLoading, setIsLoading }) => {
       setIsLoading(true);
       const registerResponse = await requestRegistrer(objRequest);
       if (registerResponse.status === 201) {
-        setCurrentRoute("/");
+        navigate("/");
       }
     }
   };
