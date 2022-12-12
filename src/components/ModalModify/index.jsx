@@ -54,10 +54,7 @@ export const ModalModify = () => {
       );
       updateTechs();
       setModifyTechModal(false);
-    } catch (error) {
-      console.log(error);
-    }
-    // const response = await modifyTech(data, token, techSelected);
+    } catch (error) {}
   };
 
   const removeTech = async () => {
@@ -79,7 +76,6 @@ export const ModalModify = () => {
       updateTechs();
       return request;
     } catch (error) {
-      console.log(error);
     } finally {
       setModifyTechModal(false);
     }

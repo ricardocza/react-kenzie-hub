@@ -17,9 +17,7 @@ export const TechProvider = ({ children }) => {
         Authorization: `Bearer ${currentToken}`,
       });
       setTechs(response.data.techs);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

@@ -52,9 +52,7 @@ export const Modal = ({ setModifyTechModal }) => {
       );
       setTechs([...techs, request.data]);
       reset();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

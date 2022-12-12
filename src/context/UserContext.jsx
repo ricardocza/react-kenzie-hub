@@ -25,7 +25,6 @@ export const UserProvider = ({ children }) => {
       );
       return response;
     } catch (error) {
-      console.log(error);
       return error;
     }
   };
@@ -59,7 +58,6 @@ export const UserProvider = ({ children }) => {
 
         setUserData(data);
       } catch (error) {
-        console.error(error);
       } finally {
         setIsLoading(false);
       }
