@@ -11,7 +11,7 @@
 ## Checkout the [Deploy](https://react-entrega-kenzie-hub-ricardocza.vercel.app/)!
 
 ## Intro
-This project was made to learn and train about React context a component.
+This project was made to learn and train about React context and component.
 It has three pages, login, register and a homepage. 
 You will need to register to check the home page.
 This project stores a token as you login, so when a token is saved and you try to access the login page,
