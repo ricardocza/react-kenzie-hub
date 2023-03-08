@@ -5,7 +5,6 @@ import { RegisterPage } from "./pages/Register";
 import GlobalStyle from "./styles/GlobalStyle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
 import { UserProvider } from "./context/UserContext.jsx";
 import { TechProvider } from "./context/TechContext.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";

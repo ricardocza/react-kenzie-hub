@@ -8,7 +8,7 @@ import { loginSchema } from "./loginSchema";
 import { FormError } from "../../components/FormError";
 import { api } from "../../services/api";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/ToastConfig";
