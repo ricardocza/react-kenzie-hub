@@ -13,8 +13,10 @@ export const TechProvider = ({ children }) => {
       const currentId = localStorage.getItem("@USERID");
 
       const response = await api.get(`users/${currentId}`, {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${currentToken}`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${currentToken}`,
+        },
       });
       setTechs(response.data.techs);
     } catch (error) {}

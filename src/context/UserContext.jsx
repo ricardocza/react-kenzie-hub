@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
       );
       return response;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   };
 
